@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Register = () => {
     return (
@@ -16,6 +16,9 @@ const Register = () => {
                 <div className="input_container">
                     <label htmlFor="password">Password</label>
                     <input type="text" name='password' />
+                </div>
+                <div className="btn_container">
+                    <button className="btn">Register</button>
                 </div>
             </form>
         </section>
