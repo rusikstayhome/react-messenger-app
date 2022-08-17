@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { setDoc, doc, Timestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -55,11 +55,28 @@ const Register = () => {
 
 
 
-    const signInWithGoogle = () => {
+    const signInWithGoogle = (e) => {
+        e.preventDefault();
+        setData({ ...data, error: null, loading: true });
         const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
-            .then((res) => {
-                console.log(res.user.uid)
+
+        signInWithRedirect(auth, provider)
+            .then((result) => {
+                setDoc(doc(db, "users", result.user.uid), {
+                    uid: result.user.uid,
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    createdAt: Timestamp.fromDate(new Date()),
+                    isOnline: true,
+                });
+                setData({
+                    name: "",
+                    email: "",
+                    password: "",
+                    error: null,
+                    loading: false,
+                });
+
             })
             .catch();
 
@@ -83,7 +100,7 @@ const Register = () => {
                 </div>
                 {error ? <p className='error'>{error}</p> : null}
                 <div className="btn_container">
-                    <button className="btn" disabled={loading}>Register</button>
+                    <button className="btn" disabled={loading}>{loading ? 'Creating...' : 'Register'}</button>
                     <br />
                     <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Sign In with Google</button>
                 </div>
