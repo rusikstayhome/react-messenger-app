@@ -55,7 +55,7 @@ const Register = () => {
 
 
 
-    const signInWithGoogle = (e) => {
+    const signInWithGoogle = async (e) => {
         e.preventDefault();
         setData({ ...data, error: null, loading: true });
         const provider = new GoogleAuthProvider();
@@ -76,11 +76,10 @@ const Register = () => {
                     error: null,
                     loading: false,
                 });
-
             })
             .catch();
 
-
+        navigate("/", { replace: true });
     }
     return (
         <section>

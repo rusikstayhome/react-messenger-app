@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { updateDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -51,31 +51,27 @@ const Login = () => {
 
 
 
-    // const signInWithGoogle = (e) => {
-    //     e.preventDefault();
-    //     setData({ ...data, error: null, loading: true });
-    //     const provider = new GoogleAuthProvider();
+    const signInWithGoogle = async (e) => {
+        e.preventDefault();
+        setData({ ...data, error: null, loading: true });
+        const provider = new GoogleAuthProvider();
 
-    //     signInWithRedirect(auth, provider)
-    //         .then((result) => {
-    //             setDoc(doc(db, "users", result.user.uid), {
-    //                 uid: result.user.uid,
-    //                 name: result.user.displayName,
-    //                 email: result.user.email,
-    //                 createdAt: Timestamp.fromDate(new Date()),
-    //                 isOnline: true,
-    //             });
-    //             setData({
-    //                 name: "",
-    //                 email: "",
-    //                 password: "",
-    //                 error: null,
-    //                 loading: false,
-    //             });
+        signInWithRedirect(auth, provider)
+            .then((result) => {
+                updateDoc(doc(db, "users", result.user.uid), {
+                    isOnline: true,
+                });
+                setData({
+                    email: "",
+                    password: "",
+                    error: null,
+                    loading: false,
+                });
+            })
+            .catch();
 
-    //         })
-    //         .catch();
-    // }
+        navigate("/", { replace: true });
+    }
     return (
         <section>
             <h3>Login in your account</h3>
@@ -92,7 +88,7 @@ const Login = () => {
                 <div className="btn_container">
                     <button className="btn" disabled={loading}>{loading ? 'Loging in...' : 'Login'}</button>
                     <br />
-                    {/* <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Sign In with Google</button> */}
+                    <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Login with Google</button>
                 </div>
             </form>
         </section>
