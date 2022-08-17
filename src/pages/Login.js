@@ -90,7 +90,7 @@ const Login = () => {
                 </div>
                 {error ? <p className='error'>{error}</p> : null}
                 <div className="btn_container">
-                    <button className="btn" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
+                    <button className="btn" disabled={loading}>{loading ? 'Loging in...' : 'Login'}</button>
                     <br />
                     {/* <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Sign In with Google</button> */}
                 </div>
