@@ -88,7 +88,7 @@ const Login = () => {
                 <div className="btn_container">
                     <button className="btn" disabled={loading}>{loading ? 'Loging in...' : 'Login'}</button>
                     <br />
-                    <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Login with Google</button>
+                    <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Login In with Google</button>
                 </div>
             </form>
         </section>

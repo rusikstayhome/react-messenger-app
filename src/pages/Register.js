@@ -60,7 +60,7 @@ const Register = () => {
         setData({ ...data, error: null, loading: true });
         const provider = new GoogleAuthProvider();
 
-        signInWithRedirect(auth, provider)
+        await signInWithRedirect(auth, provider)
             .then((result) => {
                 setDoc(doc(db, "users", result.user.uid), {
                     uid: result.user.uid,
