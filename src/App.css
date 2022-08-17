@@ -78,6 +78,11 @@ section .form {
 .btn:hover {
     transform: scale(1.05);
 }
+.btn-google {
+    margin-top: 20px;
+    background: var(--color-3);
+    color: white;
+}
 .error {
     text-align: center;
     color: var(--color-5);

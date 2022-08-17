@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { setDoc, doc, Timestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -23,9 +23,9 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setData({ ...data, error: null, loading: true })
+        setData({ ...data, error: null, loading: true });
         if (!name || !email || !password) {
-            setData({ ...data, error: "All fields are required" })
+            setData({ ...data, error: "All fields are required" });
         }
         try {
             const result = await createUserWithEmailAndPassword(
@@ -33,26 +33,38 @@ const Register = () => {
                 email,
                 password
             );
-            await setDoc(doc(db, 'users', result.user.uid), {
-                uid: result.user,
+            await setDoc(doc(db, "users", result.user.uid), {
+                uid: result.user.uid,
                 name,
                 email,
                 createdAt: Timestamp.fromDate(new Date()),
-                isOnline: true
+                isOnline: true,
             });
             setData({
-                name: '',
-                email: '',
-                password: '',
+                name: "",
+                email: "",
+                password: "",
                 error: null,
-                loading: false
+                loading: false,
             });
-            navigate.replace("/home")
+            navigate("/", { replace: true });
         } catch (err) {
-            setData({ ...data, error: err.message, loading: false })
+            setData({ ...data, error: err.message, loading: false });
         }
     };
 
+
+
+    const signInWithGoogle = () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((
+                navigate("/", { replace: true })
+            ))
+            .catch(error);
+
+
+    }
     return (
         <section>
             <h3>Create an account</h3>
@@ -72,6 +84,8 @@ const Register = () => {
                 {error ? <p className='error'>{error}</p> : null}
                 <div className="btn_container">
                     <button className="btn" disabled={loading}>Register</button>
+                    <br />
+                    <button onClick={signInWithGoogle} className="btn btn-google" disabled={loading}>Sign In with Google</button>
                 </div>
             </form>
         </section>
