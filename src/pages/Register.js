@@ -58,10 +58,10 @@ const Register = () => {
     const signInWithGoogle = () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
-            .then((
-                navigate("/", { replace: true })
-            ))
-            .catch(error);
+            .then((res) => {
+                console.log(res.user.uid)
+            })
+            .catch();
 
 
     }
@@ -85,7 +85,7 @@ const Register = () => {
                 <div className="btn_container">
                     <button className="btn" disabled={loading}>Register</button>
                     <br />
-                    <button onClick={signInWithGoogle} className="btn btn-google" disabled={loading}>Sign In with Google</button>
+                    <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Sign In with Google</button>
                 </div>
             </form>
         </section>
