@@ -47,9 +47,6 @@ const Home = () => {
         const docSnap = await getDoc(doc(db, 'lastMsg', id))
         if (docSnap.data().from !== user1) {
             await updateDoc(doc(db, 'lastMsg', id), { unread: false })
-            await updateDoc(doc(db, 'users', user2), {
-                lastMsg: Timestamp.fromDate(new Date())
-            })
         }
     }
 
@@ -61,6 +58,10 @@ const Home = () => {
         const user2 = chat.uid
 
         const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`
+
+        await updateDoc(doc(db, "users", user1), {
+            lastMsg: Timestamp.fromDate(new Date())
+        })
 
         await addDoc(collection(db, 'messages', id, 'chat'), {
             text,
@@ -76,8 +77,10 @@ const Home = () => {
             createdAt: Timestamp.fromDate(new Date()),
             unread: true
         })
-
         setText('');
+
+
+
     }
     return (
         <div className="home_container">
