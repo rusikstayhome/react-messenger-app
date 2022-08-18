@@ -23,6 +23,7 @@ const Home = () => {
             setUsers(users);
         });
         return () => unsub();
+
     }, []);
 
     const selectUser = async (user) => {
@@ -46,6 +47,9 @@ const Home = () => {
         const docSnap = await getDoc(doc(db, 'lastMsg', id))
         if (docSnap.data().from !== user1) {
             await updateDoc(doc(db, 'lastMsg', id), { unread: false })
+            await updateDoc(doc(db, 'users', user2), {
+                lastMsg: Timestamp.fromDate(new Date())
+            })
         }
     }
 

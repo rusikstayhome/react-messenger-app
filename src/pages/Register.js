@@ -10,12 +10,13 @@ const Register = () => {
         email: '',
         password: '',
         error: null,
-        loading: false
+        loading: false,
+        lastMsg: ''
     });
 
     const navigate = useNavigate();
 
-    const { name, email, password, error, loading } = data;
+    const { name, email, password, error, loading, lastMsg } = data;
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -39,6 +40,7 @@ const Register = () => {
                 email,
                 createdAt: Timestamp.fromDate(new Date()),
                 isOnline: true,
+                lastMsg
             });
             setData({
                 name: "",
@@ -46,6 +48,7 @@ const Register = () => {
                 password: "",
                 error: null,
                 loading: false,
+                lastMsg
             });
             navigate("/", { replace: true });
         } catch (err) {
