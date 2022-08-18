@@ -6,9 +6,9 @@
     --color-1: rgba(238, 238, 238, 0.859);
     --color-2: black;
     --color-3: #0084ff;
-    --color-4: grey;
+    --color-4: rgb(154, 153, 153);
     --color-5: #eb4034;
-    --color-6: #333;
+    --color-6: rgb(129, 125, 125);
 }
 
 /* Navbar */
@@ -238,4 +238,7 @@ section .form {
 }
 .me {
     /* color: black; */
+}
+.selected_user {
+    background: var(--color-6);
 }
