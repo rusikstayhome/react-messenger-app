@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Img from '../user.jpg'
 import Moment from 'react-moment'
 
-const Message = ({ msg }) => {
+const Message = ({ msg, user1 }) => {
+    const scrollRef = useRef()
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, [msg])
     return (
-        <div className="message_wrapper">
-            <p>
-                {msg.media ? <img src={msg.media} alt={msg.text} /> : <img src={Img} alt='avatar' />}
-                {msg.text}
+        <div className={`message_wrapper ${msg.from === user1 ? 'own' : ''}`} ref={scrollRef}>
+            <p className={msg.from === user1 ? 'me' : 'friend'}>
+                {/* {msg.media ? <img src={msg.media} alt={msg.text} /> : <img src={Img} alt='avatar' />} */}
+                {msg.from === user1 ? null : <img src={Img} alt='avatar' />}
+                <span>{msg.text}</span>
                 <br />
                 <small>
                     <Moment fromNow={msg.createdAt.toDate()}>

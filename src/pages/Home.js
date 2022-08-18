@@ -74,7 +74,7 @@ const Home = () => {
                         </div>
                         <div className="messages">
                             {msgs.length ?
-                                msgs.map((msg, i) => <Message key={i} msg={msg} />)
+                                msgs.map((msg, i) => <Message key={i} msg={msg} user1={user1} />)
                                 : null}
                         </div>
                         <MessageForm handleSubmit={handleSubmit} text={text} setText={setText} />
