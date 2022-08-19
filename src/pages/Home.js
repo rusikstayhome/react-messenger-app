@@ -39,13 +39,14 @@ const Home = () => {
             querySnapshot.forEach(doc => {
                 users.push(doc.data())
             })
-            setUsers(users);
+            setUsers(users.filter(user => user.uid !== user1));
         });
 
         return () => unsub();
 
 
     }, []);
+
 
 
 
@@ -101,6 +102,7 @@ const Home = () => {
             unread: true
         })
         setText('');
+
 
 
 
