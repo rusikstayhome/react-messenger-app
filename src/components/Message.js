@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import Img from '../user.jpg'
 import Moment from 'react-moment'
 
