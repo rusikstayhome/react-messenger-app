@@ -5,6 +5,7 @@ import User from "../components/User";
 import MessageForm from "../components/MessageForm";
 import Message from "../components/Message";
 
+
 const Home = () => {
     const [users, setUsers] = useState([]);
     const [chat, setChat] = useState('');
@@ -13,7 +14,8 @@ const Home = () => {
 
     const user1 = auth.currentUser.uid
     useEffect(() => {
-        const usersRef = collection(db, 'users');
+        const usersRef = collection(db, 'users')
+
         const q = query(usersRef, where('uid', 'not-in', [user1]));
         const unsub = onSnapshot(q, querySnapshot => {
             let users = []
@@ -22,9 +24,30 @@ const Home = () => {
             })
             setUsers(users);
         });
+
         return () => unsub();
 
+
     }, []);
+
+    useEffect(() => {
+        const usersRef = collection(db, 'users')
+
+        const q = query(usersRef, orderBy('lastMsg', 'desc'));
+        const unsub = onSnapshot(q, querySnapshot => {
+            let users = []
+            querySnapshot.forEach(doc => {
+                users.push(doc.data())
+            })
+            setUsers(users);
+        });
+
+        return () => unsub();
+
+
+    }, []);
+
+
 
     const selectUser = async (user) => {
         setChat(user);
