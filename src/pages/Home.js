@@ -4,13 +4,16 @@ import { collection, query, where, onSnapshot, addDoc, Timestamp, orderBy, setDo
 import User from "../components/User";
 import MessageForm from "../components/MessageForm";
 import Message from "../components/Message";
+import Profile from "./Profile";
 
 
 const Home = () => {
     const [users, setUsers] = useState([]);
     const [chat, setChat] = useState('');
     const [text, setText] = useState('');
-    const [msgs, setMsgs] = useState([])
+    const [msgs, setMsgs] = useState([]);
+    const [search, setSearch] = useState('');
+    const [filteredUsers, setFilteredUsers] = useState('');
 
     const user1 = auth.currentUser.uid
     useEffect(() => {
@@ -47,6 +50,17 @@ const Home = () => {
 
     }, []);
 
+    const searchFunction = (e) => {
+        setSearch(e);
+        if (search !== '') {
+            const filtered = users.filter(user => {
+                return user.name.toLowerCase().includes(e.toLowerCase())
+            });
+            setFilteredUsers(filtered);
+        } else setFilteredUsers(users);
+
+
+    };
 
 
 
@@ -110,8 +124,18 @@ const Home = () => {
     return (
         <div className="home_container">
             <div className="users_container">
-                {users.map(user =>
-                    <User key={user.uid} user={user} selectUser={selectUser} user1={user1} chat={chat} />)}
+                <Profile searchFunction={searchFunction} />
+
+                {search.length > 1 ?
+                    filteredUsers.map(user =>
+                        <User key={user.uid} user={user} selectUser={selectUser} user1={user1} chat={chat} />) :
+
+                    users.map(user =>
+                        <User key={user.uid} user={user} selectUser={selectUser} user1={user1} chat={chat} />)
+
+
+
+                }
             </div>
             <div className="messages_container">
                 {chat ? (

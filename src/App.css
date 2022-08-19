@@ -89,6 +89,27 @@ section .form {
 }
 
 /* Profile */
+.profile {
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid black;
+    padding: 10px 5px;
+}
+.profile h3 {
+    font-size: 18px;
+}
+.profile p {
+    font-size: 14px;
+}
+.profile input {
+    margin-top: 15px;
+    margin-left: 20px;
+    padding: 8px;
+    width: 80%;
+    border-radius: 15px;
+    border: 1px solid grey;
+}
 .profile_container {
     display: flex;
     align-items: center;
@@ -98,14 +119,14 @@ section .form {
     margin-right: 20px;
 }
 .img_container img {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     border: 1px solid var(--color-4);
     transition: 0.5s ease-in-out all;
 }
 .img_container:hover img {
-    width: 100px;
+    width: 70px;
     opacity: 0.4;
 }
 .img_container:hover .overlay {

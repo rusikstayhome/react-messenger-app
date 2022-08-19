@@ -21,6 +21,8 @@ const Message = ({ msg, user1 }) => {
                         {msg.createdAt.toDate()}
 
                     </Moment>
+                    /{msg.createdAt.toDate().toDateString()}
+
                 </small>
             </p>
         </div>

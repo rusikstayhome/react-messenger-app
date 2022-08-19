@@ -7,7 +7,7 @@ import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 
-const Profile = () => {
+const Profile = ({ searchFunction }) => {
     const [img, setImg] = useState('')
     const [user, setUser] = useState('');
     const navigate = useNavigate('');
@@ -69,7 +69,7 @@ const Profile = () => {
         }
     }
     return user ? (
-        <section>
+        <section className="profile">
             <div className="profile_container">
                 <div className="img_container">
                     <img src={user.avatar || Avatar} alt="" />
@@ -89,7 +89,11 @@ const Profile = () => {
                     <hr />
                     <small>Joined on: {user.createdAt.toDate().toDateString()}</small>
                 </div>
+
             </div>
+            <form action="">
+                <input type="text" onChange={(e) => searchFunction(e.target.value)} />
+            </form>
         </section>
     ) : null
 };
