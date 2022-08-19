@@ -5,10 +5,12 @@ import Delete from "../components/svg/Delete";
 import { storage, db, auth } from "../firebase";
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import { getDoc, doc, updateDoc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const [img, setImg] = useState('')
     const [user, setUser] = useState('');
+    const navigate = useNavigate('');
 
     useEffect(() => {
         getDoc(doc(db, 'users', auth.currentUser.uid))
@@ -47,7 +49,25 @@ const Profile = () => {
             uploadImg();
 
         }
-    }, [img])
+    }, [img]);
+
+    const deleteImage = async () => {
+        try {
+            const confirm = window.confirm('Delete avatar?')
+            if (confirm) {
+                await deleteObject(ref(storage, user.avatarPath))
+
+                await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+                    avatar: '',
+                    avatarPath: ''
+                })
+                navigate("/", { replace: true });
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
     return user ? (
         <section>
             <div className="profile_container">
@@ -58,7 +78,7 @@ const Profile = () => {
                             <label htmlFor="photo">
                                 <Camera />
                             </label>
-                            {user.avatar ? <Delete /> : null}
+                            {user.avatar ? <Delete deleteImage={deleteImage} /> : null}
                             <input type="file" accept="image/*" style={{ display: 'none' }} id='photo' onChange={e => setImg(e.target.files[0])} />
                         </div>
                     </div>
