@@ -5,6 +5,7 @@ import User from "../components/User";
 import MessageForm from "../components/MessageForm";
 import Message from "../components/Message";
 import Profile from "./Profile";
+import axios from "axios";
 
 
 const Home = () => {
@@ -12,9 +13,13 @@ const Home = () => {
     const [chat, setChat] = useState('');
     const [text, setText] = useState('');
     const [msgs, setMsgs] = useState([]);
+    const [autoMsgs, setAutoMsgs] = useState([]);
     const [search, setSearch] = useState('');
     const [filteredUsers, setFilteredUsers] = useState('');
 
+
+
+    const axios = require('axios');
     const user1 = auth.currentUser.uid
     useEffect(() => {
         const usersRef = collection(db, 'users')
@@ -66,7 +71,7 @@ const Home = () => {
 
     const selectUser = async (user) => {
         setChat(user);
-        console.log(user);
+        // console.log(user);
 
         const user2 = user.uid;
         const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
@@ -80,6 +85,8 @@ const Home = () => {
                 msgs.push(doc.data())
             })
             setMsgs(msgs)
+            console.log(msgs)
+
         })
 
         const docSnap = await getDoc(doc(db, 'lastMsg', id))
@@ -88,7 +95,8 @@ const Home = () => {
         }
     }
 
-    console.log(msgs);
+    // console.log(msgs);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -117,16 +125,49 @@ const Home = () => {
         })
         setText('');
 
-
-
+        axios.get('https://api.chucknorris.io/jokes/random')
+            .then(res => {
+                let autoMsg = res.data.value;
+                setAutoMsgs({
+                    text: autoMsg,
+                    from: user2,
+                    to: user1,
+                    createdAt: Timestamp.fromDate(new Date())
+                });
+                updateDoc(doc(db, "users", user2), {
+                    text: autoMsg,
+                    lastMsg: Timestamp.fromDate(new Date())
+                })
+                addDoc(collection(db, 'messages', user2, 'chat'), {
+                    text: autoMsg,
+                    from: user2,
+                    to: user1,
+                    createdAt: Timestamp.fromDate(new Date())
+                });
+                setDoc(doc(db, 'lastMsg', user2), {
+                    text: autoMsg,
+                    from: user2,
+                    to: user1,
+                    createdAt: Timestamp.fromDate(new Date()),
+                    unread: true
+                })
+                setText('');
+                console.log(autoMsgs)
+            })
 
     }
+    // useEffect(() => {
+
+
+
+    // }, [handleSubmit]);
+
     return (
         <div className="home_container">
             <div className="users_container">
                 <Profile searchFunction={searchFunction} />
 
-                {search.length > 1 ?
+                {search.length >= 1 ?
                     filteredUsers.map(user =>
                         <User key={user.uid} user={user} selectUser={selectUser} user1={user1} chat={chat} />)
 
