@@ -128,12 +128,12 @@ const Home = () => {
 
                 {search.length > 1 ?
                     filteredUsers.map(user =>
-                        <User key={user.uid} user={user} selectUser={selectUser} user1={user1} chat={chat} />) :
-
-                    users.map(user =>
                         <User key={user.uid} user={user} selectUser={selectUser} user1={user1} chat={chat} />)
 
+                    :
 
+                    users.sort((a, b) => b.lastMsg - a.lastMsg).map(user =>
+                        <User key={user.uid} user={user} selectUser={selectUser} user1={user1} chat={chat} />)
 
                 }
             </div>
