@@ -5,9 +5,7 @@ import User from "../components/User";
 import MessageForm from "../components/MessageForm";
 import Message from "../components/Message";
 import Profile from "./Profile";
-import Moment from "react-moment";
-import axios from "axios";
-import Img from '../user.jpg'
+
 
 
 const Home = () => {
