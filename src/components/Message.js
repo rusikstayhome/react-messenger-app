@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Img from '../user.jpg'
 import Moment from 'react-moment'
 
-const Message = ({ msg, user1 }) => {
+const Message = ({ msg, user1, autoMsgs }) => {
     const scrollRef = useRef()
 
     // useEffect(() => {
