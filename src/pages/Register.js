@@ -101,11 +101,11 @@ const Register = () => {
                     <input type="text" name='password' value={password} onChange={handleChange} />
                 </div>
                 {error ? <p className='error'>{error}</p> : null}
-                {/* <div className="btn_container">
+                <div className="btn_container">
                     <button className="btn" disabled={loading}>{loading ? 'Creating...' : 'Register'}</button>
-                    <br />
-                    <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Sign In with Google</button>
-                </div> */}
+
+                    {/* <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Sign In with Google</button> */}
+                </div>
             </form>
         </section>
     )

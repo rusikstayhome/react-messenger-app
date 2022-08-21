@@ -306,7 +306,6 @@ section .form {
     text-align: right;
 }
 .me {
-    /* color: black; */
 }
 .selected_user {
     background: var(--color-6);
