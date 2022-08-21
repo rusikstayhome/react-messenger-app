@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Avatar from '../user.jpg';
-import Camera from "../components/svg/Camera";
+import Camera from "../components/svg/Kamera";
 import Delete from "../components/svg/Delete";
 import Search from '../components/svg/Search';
 import { storage, db, auth } from "../firebase";
