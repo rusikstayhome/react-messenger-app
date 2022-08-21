@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Avatar from '../user.jpg';
-import Camera from "../components/svg/camera";
-import Delete from "../components/svg/delete";
-import Search from '../components/svg/search';
+import Camera from "../components/svg/Camera";
+import Delete from "../components/svg/Delete";
+import Search from '../components/svg/Search';
 import { storage, db, auth } from "../firebase";
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import { getDoc, doc, updateDoc } from "firebase/firestore";
