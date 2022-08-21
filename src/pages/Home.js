@@ -38,17 +38,6 @@ const Home = () => {
 
   }, []);
 
-  // useEffect(() => {
-  //   axios.get('https://api.chucknorris.io/jokes/random')
-  //     .then(res => {
-
-  //       setAutoMsgs({
-  //         text: res.data.value,
-  //         to: user1,
-  //         createdAt: Timestamp.fromDate(new Date())
-  //       });
-  //     })
-  // }, [])
 
   useEffect(() => {
     const usersRef = collection(db, 'users')
@@ -107,14 +96,10 @@ const Home = () => {
     }
   }
 
-  // console.log(msgs);
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const user2 = chat.uid
-    const show = 'show'
 
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`
 
@@ -137,17 +122,19 @@ const Home = () => {
       unread: true
     })
     setText('');
+    setAutoMsgs(null);
 
     setTimeout(() => {
       axios.get('https://api.chucknorris.io/jokes/random')
         .then(res => {
 
-          setAutoMsgs({
+          let autoMsgs = {
             text: res.data.value,
             from: user2,
             to: user1,
-            createdAt: Timestamp.fromDate(new Date())
-          });
+            createdAt: Timestamp.fromDate(new Date()),
+            unread: true
+          };
           updateDoc(doc(db, "users", user2), {
             text: res.data.value,
             lastMsg: Timestamp.fromDate(new Date())
@@ -165,20 +152,14 @@ const Home = () => {
             createdAt: Timestamp.fromDate(new Date()),
             unread: true
           })
-          setText('');
-          console.log(autoMsgs.text)
+          setMsgs(current => [...current, autoMsgs]);
+
         })
 
-    }, 1500)
+    }, 3500)
 
 
   }
-  // useEffect(() => {
-
-
-
-  // }, [handleSubmit])
-
 
   return (
     <div className="home_container">
@@ -209,7 +190,7 @@ const Home = () => {
 
 
 
-              {autoMsgs && <div className={`message_wrapper`}
+              {/* {autoMsgs && <div className={`message_wrapper`}
               >
                 <p className='friend'>
                   <img src={Img} alt='avatar' />
@@ -225,7 +206,7 @@ const Home = () => {
 
                   </small>
                 </p>
-              </div>}
+              </div>} */}
             </div>
             <MessageForm handleSubmit={handleSubmit} text={text} setText={setText} />
           </>

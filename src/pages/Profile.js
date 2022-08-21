@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Avatar from '../user.jpg';
 import Camera from "../components/svg/Camera";
 import Delete from "../components/svg/Delete";
+import Search from '../components/svg/Search';
 import { storage, db, auth } from "../firebase";
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
+
 
 const Profile = ({ searchFunction }) => {
     const [img, setImg] = useState('')
@@ -91,8 +93,11 @@ const Profile = ({ searchFunction }) => {
                 </div>
 
             </div>
-            <form action="">
-                <input type="text" onChange={(e) => searchFunction(e.target.value)} />
+            <form action="" className="search_form">
+                <label htmlFor="search">
+                    <Search />
+                </label>
+                <input type="text" id='search' placeholder="Search or start new chat" onChange={(e) => searchFunction(e.target.value)} />
             </form>
         </section>
     ) : null

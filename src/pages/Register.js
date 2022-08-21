@@ -58,32 +58,32 @@ const Register = () => {
 
 
 
-    const signInWithGoogle = async (e) => {
-        e.preventDefault();
-        setData({ ...data, error: null, loading: true });
-        const provider = new GoogleAuthProvider();
+    // const signInWithGoogle = async (e) => {
+    //     e.preventDefault();
+    //     setData({ ...data, error: null, loading: true });
+    //     const provider = new GoogleAuthProvider();
 
-        await signInWithRedirect(auth, provider)
-            .then((result) => {
-                setDoc(doc(db, "users", result.user.uid), {
-                    uid: result.user.uid,
-                    name: result.user.displayName,
-                    email: result.user.email,
-                    createdAt: Timestamp.fromDate(new Date()),
-                    isOnline: true,
-                });
-                setData({
-                    name: "",
-                    email: "",
-                    password: "",
-                    error: null,
-                    loading: false,
-                });
-            })
-            .catch();
+    //     await signInWithRedirect(auth, provider)
+    //         .then((result) => {
+    //             setDoc(doc(db, "users", result.user.uid), {
+    //                 uid: result.user.uid,
+    //                 name: result.user.displayName,
+    //                 email: result.user.email,
+    //                 createdAt: Timestamp.fromDate(new Date()),
+    //                 isOnline: true,
+    //             });
+    //             setData({
+    //                 name: "",
+    //                 email: "",
+    //                 password: "",
+    //                 error: null,
+    //                 loading: false,
+    //             });
+    //         })
+    //         .catch();
 
-        navigate("/", { replace: true });
-    }
+    //     navigate("/", { replace: true });
+    // }
     return (
         <section>
             <h3>Create an account</h3>
@@ -101,11 +101,11 @@ const Register = () => {
                     <input type="text" name='password' value={password} onChange={handleChange} />
                 </div>
                 {error ? <p className='error'>{error}</p> : null}
-                <div className="btn_container">
+                {/* <div className="btn_container">
                     <button className="btn" disabled={loading}>{loading ? 'Creating...' : 'Register'}</button>
                     <br />
                     <button onClick={signInWithGoogle} type='button' className="btn btn-google" disabled={loading}>Sign In with Google</button>
-                </div>
+                </div> */}
             </form>
         </section>
     )
