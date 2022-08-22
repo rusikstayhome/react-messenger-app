@@ -5,6 +5,7 @@ import User from "../components/User";
 import MessageForm from "../components/MessageForm";
 import Message from "../components/Message";
 import Profile from "./Profile";
+import axios from 'axios';
 
 
 
@@ -17,7 +18,7 @@ const Home = () => {
   const [search, setSearch] = useState('');
   const [filteredUsers, setFilteredUsers] = useState('');
 
-  const axios = require('axios');
+
   const user1 = auth.currentUser.uid
   useEffect(() => {
     const usersRef = collection(db, 'users')
